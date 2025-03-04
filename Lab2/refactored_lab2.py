@@ -1,6 +1,7 @@
-import numpy as np
 import random
 import time
+
+import numpy as np
 import matplotlib.pyplot as plt
 
 # Ініціалізація генератора випадкових чисел на основі поточного часу

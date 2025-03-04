@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from Lab2 import generate_random_matrix, fuzzy_composition, fuzzy_composition_minmax
+from refactored_lab2 import generate_random_matrix, fuzzy_composition, fuzzy_composition_minmax
 
 def test_generate_random_matrix():
     rows, cols = 3, 4
