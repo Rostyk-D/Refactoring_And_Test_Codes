@@ -1,0 +1,206 @@
+{
+    "products": {
+        "67d013a8402f0d15784427ea": {
+            "name": "Laptop",
+            "price": 1000,
+            "stock_quantity": 88
+        },
+        "67d013a8402f0d15784427eb": {
+            "name": "Smartphone",
+            "price": 500,
+            "stock_quantity": 90
+        },
+        "67d013a8402f0d15784427ec": {
+            "name": "Headphones",
+            "price": 100,
+            "stock_quantity": 80
+        },
+        "67d013a8402f0d15784427ed": {
+            "name": "PS5",
+            "price": 2250,
+            "stock_quantity": 82
+        }
+    },
+    "users": {
+        "john_Doe@example.com": {
+            "user_id": "67d01ec4402f0d0f24221358",
+            "name": "John",
+            "password": "1234"
+        }
+    },
+    "orders": {
+        "67d0152c402f0d14ecac42fe": {
+            "order_id": "67d0152c402f0d14ecac42fe",
+            "user": {
+                "user_id": "67d0152c402f0d14ecac42fd",
+                "name": "John Doe",
+                "email": "john@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ea",
+                    2
+                ],
+                [
+                    "67d013a8402f0d15784427ec",
+                    3
+                ],
+                [
+                    "67d013a8402f0d15784427eb",
+                    5
+                ]
+            ],
+            "total_amount": 4800
+        },
+        "67d01552402f0d1e5ce509a6": {
+            "order_id": "67d01552402f0d1e5ce509a6",
+            "user": {
+                "user_id": "67d01552402f0d1e5ce509a5",
+                "name": "John Doe",
+                "email": "john@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d015d6402f0d2988927837": {
+            "order_id": "67d015d6402f0d2988927837",
+            "user": {
+                "user_id": "67d015d6402f0d2988927836",
+                "name": "John Doe",
+                "email": "john@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d01606402f0d268c706dfe": {
+            "order_id": "67d01606402f0d268c706dfe",
+            "user": {
+                "user_id": "67d01606402f0d268c706dfd",
+                "name": "John Doe",
+                "email": "john@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d01631402f0d17d40b0278": {
+            "order_id": "67d01631402f0d17d40b0278",
+            "user": {
+                "user_id": "67d01631402f0d17d40b0277",
+                "name": "John Doe",
+                "email": "john@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d01e6b402f0d134416112c": {
+            "order_id": "67d01e6b402f0d134416112c",
+            "user": {
+                "user_id": "67d01e6b402f0d134416112b",
+                "name": "John",
+                "email": "john_Doe@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d01e6b402f0d1344161136": {
+            "order_id": "67d01e6b402f0d1344161136",
+            "user": {
+                "user_id": "67d01e6b402f0d1344161135",
+                "name": "John",
+                "email": "john_Doe@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d01ec4402f0d0f2422134f": {
+            "order_id": "67d01ec4402f0d0f2422134f",
+            "user": {
+                "user_id": "67d01ec4402f0d0f2422134e",
+                "name": "John",
+                "email": "john_Doe@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d01ec4402f0d0f24221359": {
+            "order_id": "67d01ec4402f0d0f24221359",
+            "user": {
+                "user_id": "67d01ec4402f0d0f24221358",
+                "name": "John",
+                "email": "john_Doe@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d020dd402f0d2a5c2a213b": {
+            "order_id": "67d020dd402f0d2a5c2a213b",
+            "user": {
+                "user_id": "67d01ec4402f0d0f24221358",
+                "name": "John",
+                "email": "john_Doe@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        },
+        "67d020dd402f0d2a5c2a213d": {
+            "order_id": "67d020dd402f0d2a5c2a213d",
+            "user": {
+                "user_id": "67d01ec4402f0d0f24221358",
+                "name": "John",
+                "email": "john_Doe@example.com"
+            },
+            "products": [
+                [
+                    "67d013a8402f0d15784427ed",
+                    2
+                ]
+            ],
+            "total_amount": 4500
+        }
+    }
+}
