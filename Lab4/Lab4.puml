@@ -1,0 +1,92 @@
+@startuml
+' Налаштування стилю для кращої візуалізації
+skinparam classAttributeIconSize 0
+
+' ============================
+' Класи та їх атрибути/методи
+' ============================
+
+class Database {
+  - client
+  - db
+  - initialized
+  - _instance : Database
+  + __new__(cls, *args, **kwargs)
+  + __init__()
+  + initialize_products()
+  + update_product_quantity_by_name(product_name, quantity)
+  + get_product_by_name(product_name)
+  + update_product_stock(product_name, quantity)
+  + insert_order(order_data)
+}
+
+class User {
+  - user_id
+  - name
+  - email
+  - password
+  + __init__(user_id, name, email, password)
+  + register(db)
+  + login(password, db)
+}
+
+class Order {
+  - order_id
+  - user
+  - products
+  - total_amount
+  + __init__(order_id, user)
+  + add_product(product_name, quantity, db)
+  + view_order(db)
+  + save_order(db)
+}
+
+class OrderRegular {
+  + __init__(order_id, user)
+}
+
+class OrderBulk {
+  + __init__(order_id, user)
+  + add_product(product_name, quantity, db)
+}
+
+class OrderFactory {
+  + create_order(order_type, order_id, user)
+}
+
+class OrderNotifier {
+  - observers
+  + subscribe(observer)
+  + unsubscribe(observer)
+  + notify(order)
+}
+
+class OnlineStoreObserver {
+  + update(order)
+}
+
+' ====================================
+' Наслідування та зв’язки між класами
+' ====================================
+
+OrderRegular --|> Order
+OrderBulk --|> Order
+
+' OrderFactory створює замовлення типу OrderRegular або OrderBulk
+OrderFactory ..> OrderRegular : creates
+OrderFactory ..> OrderBulk : creates
+
+' Замовлення асоціюється з користувачем
+Order --> User
+
+' Використання бази даних:
+User --> Database : uses (register, login)
+Order --> Database : operations on products/orders
+
+' База даних використовується для збереження замовлення
+Database --> Order : persists orders
+
+' Паттерн Observer
+OrderNotifier --> OnlineStoreObserver : notifies
+
+@enduml
