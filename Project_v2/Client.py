@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import random
+import secrets
+import string
 import uuid
 from Project_v2.container import Container
 from Project_v2.library.book import Book
@@ -142,7 +143,9 @@ class LibraryGUI(tk.Tk):
             ent = ttk.Entry(popup)
             ent.grid(row=i, column=1, padx=5, pady=5)
             entries[label] = ent
-        isbn_val = ''.join(str(random.randint(0, 9)) for _ in range(13))
+
+        # Замість random.randint використаємо модуль secrets для безпечної генерації ISBN:
+        isbn_val = "".join(secrets.choice(string.digits) for _ in range(13))
 
         def submit_book():
             try:
