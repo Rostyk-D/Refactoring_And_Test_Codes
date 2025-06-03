@@ -627,7 +627,7 @@ class TestLibraryGUIPopupMethods(unittest.TestCase):
         with patch('Project_v2.Client.ttk.Entry', return_value=empty_entry), \
              patch.object(self.mod.service, 'remove_book') as mock_remove, \
              patch('Project_v2.Client.messagebox.showinfo'), \
-             patch('Project_v2.Client.messagebox.showerror'):
+             patch('Project_v2.Client.messagebox.showerror') as mock_error:
             def fake_button(parent, text, command, **kwargs):
                 btn = MagicMock()
                 if text == "Видалити":
@@ -635,7 +635,8 @@ class TestLibraryGUIPopupMethods(unittest.TestCase):
                 return btn
             with patch('Project_v2.Client.ttk.Button', side_effect=fake_button):
                 self.app.delete_book_popup()
-                mock_remove.assert_called_once_with("")
+                mock_remove.assert_not_called()
+                mock_error.assert_called_once_with("Помилка", "Будь ласка, введіть ISBN.")
 
     def test_show_book_edit_form_and_save_changes(self):
         patch('Project_v2.Client.tk.Toplevel').start()

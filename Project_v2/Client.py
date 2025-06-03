@@ -6,6 +6,8 @@ import uuid
 from Project_v2.container import Container
 from Project_v2.library.book import Book
 from Project_v2.library.user import User
+import datetime
+import random
 
 # Налаштування DI-контейнера
 container = Container()
@@ -112,11 +114,20 @@ class LibraryGUI(tk.Tk):
 
         def submit():
             crit = {}
-            if entries["Назва"].get():    crit["title"] = entries["Назва"].get()
-            if entries["Автор"].get():   crit["author"] = entries["Автор"].get()
-            if entries["Рік"].get():      crit["year"] = int(entries["Рік"].get())
-            if entries["Жанр"].get():     crit["genre"] = entries["Жанр"].get()
-            if entries["ISBN"].get():     crit["isbn"] = entries["ISBN"].get()
+            if entries["Назва"].get():
+                crit["title"] = entries["Назва"].get()
+            if entries["Автор"].get():
+                crit["author"] = entries["Автор"].get()
+            if entries["Рік"].get():
+                year_str = entries["Рік"].get().strip()
+                if not year_str.isdigit():
+                    messagebox.showerror("Помилка", "Поле 'Рік' має містити тільки цифри.")
+                    return
+                crit["year"] = int(year_str)
+            if entries["Жанр"].get():
+                crit["genre"] = entries["Жанр"].get()
+            if entries["ISBN"].get():
+                crit["isbn"] = entries["ISBN"].get()
 
             results = service.search_books(**crit)
             self.books_list.delete("1.0", tk.END)
@@ -148,12 +159,36 @@ class LibraryGUI(tk.Tk):
         isbn_val = "".join(secrets.choice(string.digits) for _ in range(13))
 
         def submit_book():
+            # Валідація полів перед створенням об’єкта
+            title = entries["Назва"].get().strip()
+            author = entries["Автор"].get().strip()
+            year_str = entries["Рік видання"].get().strip()
+            genre = entries["Жанр"].get().strip()
+
+            if not title:
+                messagebox.showerror("Помилка", "Поле 'Назва' не може бути порожнім.")
+                return
+            if not author:
+                messagebox.showerror("Помилка", "Поле 'Автор' не може бути порожнім.")
+                return
+            if not year_str.isdigit():
+                messagebox.showerror("Помилка", "Поле 'Рік видання' має містити тільки цифри.")
+                return
+            year = int(year_str)
+            current_year = datetime.date.today().year
+            if year < 1000 or year > current_year:
+                messagebox.showerror("Помилка", f"Поле 'Рік видання' має бути між 1000 та {current_year}.")
+                return
+            if not genre:
+                messagebox.showerror("Помилка", "Поле 'Жанр' не може бути порожнім.")
+                return
+
             try:
                 book = Book(
-                    entries["Назва"].get(),
-                    entries["Автор"].get(),
-                    int(entries["Рік видання"].get()),
-                    entries["Жанр"].get(),
+                    title,
+                    author,
+                    year,
+                    genre,
                     isbn_val
                 )
                 service.add_book(book)
@@ -175,8 +210,12 @@ class LibraryGUI(tk.Tk):
         ent.pack(padx=5, pady=5)
 
         def delete_book():
+            isbn = ent.get().strip()
+            if not isbn:
+                messagebox.showerror("Помилка", "Будь ласка, введіть ISBN.")
+                return
             try:
-                service.remove_book(ent.get())
+                service.remove_book(isbn)
                 messagebox.showinfo("Успіх", "Книгу видалено")
                 popup.destroy()
                 self.list_books()
@@ -193,7 +232,12 @@ class LibraryGUI(tk.Tk):
         ent.grid(row=0, column=1, padx=5, pady=5)
 
         def load_book():
-            book = service.books.get(ent.get())
+            isbn = ent.get().strip()
+            if not isbn:
+                messagebox.showerror("Помилка", "Будь ласка, введіть ISBN.")
+                return
+
+            book = service.books.get(isbn)
             if not book:
                 messagebox.showerror("Помилка", "Книгу не знайдено")
                 popup.destroy()
@@ -223,11 +267,34 @@ class LibraryGUI(tk.Tk):
             entries[lbl] = ent
 
         def save_changes():
+            title = entries["Назва"].get().strip()
+            author = entries["Автор"].get().strip()
+            year_str = entries["Рік видання"].get().strip()
+            genre = entries["Жанр"].get().strip()
+
+            if not title:
+                messagebox.showerror("Помилка", "Поле 'Назва' не може бути порожнім.")
+                return
+            if not author:
+                messagebox.showerror("Помилка", "Поле 'Автор' не може бути порожнім.")
+                return
+            if not year_str.isdigit():
+                messagebox.showerror("Помилка", "Поле 'Рік видання' має містити тільки цифри.")
+                return
+            year = int(year_str)
+            current_year = datetime.date.today().year
+            if year < 1000 or year > current_year:
+                messagebox.showerror("Помилка", f"Поле 'Рік видання' має бути між 1000 та {current_year}.")
+                return
+            if not genre:
+                messagebox.showerror("Помилка", "Поле 'Жанр' не може бути порожнім.")
+                return
+
             try:
-                book.title = entries["Назва"].get()
-                book.author = entries["Автор"].get()
-                book.year = int(entries["Рік видання"].get())
-                book.genre = entries["Жанр"].get()
+                book.title = title
+                book.author = author
+                book.year = year
+                book.genre = genre
                 service.remove_book(book.isbn)
                 service.add_book(book)
                 messagebox.showinfo("Успіх", "Зміни збережено")
@@ -264,13 +331,27 @@ class LibraryGUI(tk.Tk):
             entries[label] = ent
 
         def submit_user():
+            first_name = entries["Ім'я"].get().strip()
+            last_name = entries["Прізвище"].get().strip()
+            email = entries["Email"].get().strip()
+
+            if not first_name:
+                messagebox.showerror("Помилка", "Поле 'Ім'я' не може бути порожнім.")
+                return
+            if not last_name:
+                messagebox.showerror("Помилка", "Поле 'Прізвище' не може бути порожнім.")
+                return
+            if not email or "@" not in email:
+                messagebox.showerror("Помилка", "Поле 'Email' повинно містити дійсну адресу.")
+                return
+
             try:
                 uid = str(uuid.uuid4())[:8]
                 user = User(
                     uid,
-                    entries["Ім'я"].get(),
-                    entries["Прізвище"].get(),
-                    entries["Email"].get()
+                    first_name,
+                    last_name,
+                    email
                 )
                 service.register_user(user)
                 messagebox.showinfo("Успіх", f"Користувача додано. ID: {uid}")
@@ -296,7 +377,12 @@ class LibraryGUI(tk.Tk):
         user_id_entry.grid(row=1, column=1, padx=5, pady=5)
 
         def confirm_issue():
-            success = service.issue_book(isbn_entry.get(), user_id_entry.get())
+            isbn = isbn_entry.get().strip()
+            user_id = user_id_entry.get().strip()
+            if not isbn or not user_id:
+                messagebox.showerror("Помилка", "Обидва поля мають бути заповнені.")
+                return
+            success = service.issue_book(isbn, user_id)
             if success:
                 messagebox.showinfo("Успіх", "Книгу видано успішно")
             else:
@@ -320,7 +406,12 @@ class LibraryGUI(tk.Tk):
         user_id_entry.grid(row=1, column=1, padx=5, pady=5)
 
         def confirm_return():
-            service.return_book(isbn_entry.get(), user_id_entry.get())
+            isbn = isbn_entry.get().strip()
+            user_id = user_id_entry.get().strip()
+            if not isbn or not user_id:
+                messagebox.showerror("Помилка", "Обидва поля мають бути заповнені.")
+                return
+            service.return_book(isbn, user_id)
             messagebox.showinfo("Успіх", "Книгу повернуто")
             popup.destroy()
 

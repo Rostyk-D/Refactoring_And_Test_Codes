@@ -16,9 +16,6 @@ class RepoBundle:
 class RepositoryFactory:
     @staticmethod
     def create_sqlite(db_path: str) -> RepoBundle:
-        """
-        Створює бандл репозиторіїв на основі SQLite
-        """
         initialize_database(db_path)
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
@@ -30,9 +27,6 @@ class RepositoryFactory:
 
     @staticmethod
     def create_in_memory() -> RepoBundle:
-        """
-        Створює бандл репозиторіїв in-memory (для тестування)
-        """
         path = ':memory:'
         initialize_database(path)
         conn = sqlite3.connect(path)
